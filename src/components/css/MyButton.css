@@ -1,0 +1,113 @@
+/* Increase specificity by targeting Ant Design's internal button structure */
+.custom-button-danger {
+    background-color: #ff4d4f !important; /* Default danger red */
+    border-color: #ff4d4f !important;
+    color: white !important;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+  /* Danger button hover effect */
+  .custom-button-danger:hover,
+  .custom-button-danger:focus {
+    background-color: #ff7875 !important; /* Lighter red on hover */
+    border-color: #ff7875 !important;
+  }
+  
+  /* Danger button active (pressed) effect */
+  .custom-button-danger:active {
+    background-color: #d9363e !important; /* Darker red on click */
+    border-color: #d9363e !important;
+  }
+
+  /* Gray button */
+  .custom-button-gray {
+    background-color: #5f5e5e !important; 
+    border-color: #5f5e5e !important;
+    color: white !important;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+
+  .custom-button-gray:hover,
+  .custom-button-gray:focus {
+    background-color: #6b6b6b !important; 
+    border-color: #6b6b6b !important;
+  }
+
+
+  .custom-button-gray:active {
+    background-color: #4d4d4d !important; 
+    border-color: #5f5e5e !important;
+  }
+
+   /* End Gray button */
+
+   /* Green button */
+  .custom-button-green {
+    background-color: #3f9b33 !important; 
+    border-color: #3f9b33 !important;
+    color: white !important;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+
+  .custom-button-green:hover,
+  .custom-button-green:focus {
+    background-color: #46a53a !important; 
+    border-color: #46a53a !important;
+  }
+
+
+  .custom-button-green:active {
+    background-color: #5dc050 !important; 
+    border-color: #3f9b33 !important;
+  }
+
+   /* End Green button */
+
+  /* Warning button */
+  .custom-button-warning {
+    background-color: #ffcc00 !important; 
+    border-color:  	#ffcc00 !important;
+    color: black !important;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+
+  .custom-button-warning:hover,
+  .custom-button-warning:focus {
+    background-color:  	#f3c406 !important; 
+    border-color:  	#f3c406 !important;
+  }
+
+
+  .custom-button-warning:active {
+    background-color: #ebbe0b !important; 
+    border-color: #ebbe0b !important;
+  }
+
+   /* End Black button */
+
+     /* Warning button */
+  .custom-button-black {
+    background-color: #000000 !important; 
+    border-color:  	#000000 !important;
+    color:white !important;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+
+  .custom-button-black:hover,
+  .custom-button-black:focus {
+    background-color:  	#1d1d1d !important; 
+    border-color:  	#1d1d1d !important;
+  }
+
+
+  .custom-button-black:active {
+    background-color: #202020 !important; 
+    border-color: #202020 !important;
+  }
+
+   /* End Black button */
+  

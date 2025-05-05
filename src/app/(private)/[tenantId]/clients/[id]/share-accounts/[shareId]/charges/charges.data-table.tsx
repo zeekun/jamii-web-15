@@ -1,0 +1,145 @@
+"use client";
+import {
+  SavingsAccountCharge,
+  SavingsAccountTransaction,
+  ShareAccountCharge,
+} from "@/types";
+import type { TableProps } from "antd";
+import { useState } from "react";
+import { formattedDate } from "@/utils/dates";
+import { formatNumber } from "@/utils/numbers";
+import MyDataTable from "@/components/data-table";
+import { useParams } from "next/navigation";
+import PageHeader from "@/components/page-header";
+import _ from "lodash";
+
+export default function DataTable(props: { data: any; loading: boolean }) {
+  const { tenantId, id, savingId } = useParams();
+  const { data, loading } = props;
+
+  const [searchedText, setSearchedText] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const columns: TableProps<ShareAccountCharge>["columns"] = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      render: (_, record) => record.charge.name,
+      filteredValue: [searchedText],
+      onFilter: (value, record) => {
+        const v = value as string;
+        return String(record.id).toLowerCase().includes(v);
+        // ||
+        // String(formattedDate(record.transactionDate))
+        //   .toLowerCase()
+        //   .includes(v) ||
+        // String(record.transactionTypeEnum).toLowerCase().includes(v) ||
+        // String(record.amount).toLowerCase().includes(v) ||
+        // String(record.runningBalanceDerived).toLowerCase().includes(v)
+      },
+    },
+    {
+      title: "Fee / Penalty",
+      dataIndex: "charge.isPenalty",
+      key: "charge.isPenalty",
+      render: (_, record) => {
+        return record.charge.isPenalty ? "Penalty" : "Fee";
+      },
+    },
+    {
+      title: "Payment Due At",
+      dataIndex: "charge.chargeTimeTypeEnum;",
+      key: "charge.chargeTimeTypeEnum;",
+      render: (__, record) => {
+        return (
+          <span className="capitalize">{_.toLower(record.chargeTimeEnum)}</span>
+        );
+      },
+    },
+    {
+      title: "Calculation Type",
+      dataIndex: "chargeCalculationEnum;",
+      key: "chargeCalculationEnum;",
+      render: (__, record) => {
+        return (
+          <span className="capitalize">
+            {_.toLower(record.chargeCalculationEnum)}
+          </span>
+        );
+      },
+    },
+    {
+      title: <span className="flex justify-end">Due</span>,
+      dataIndex: "charge.amount;",
+      key: "charge.amount;",
+      render: (_, record) => {
+        return (
+          <span className="flex justify-end">
+            {record.chargeCalculationEnum === "FLAT" &&
+              record.charge.currencyId}{" "}
+            {formatNumber(record.amount, 2)}
+            {record.chargeCalculationEnum !== "FLAT" && `%`}
+          </span>
+        );
+      },
+    },
+    {
+      title: <span className="flex justify-end">Paid</span>,
+      dataIndex: "amountPaidDerived;",
+      key: "amountPaidDerived;",
+      render: (_, record) => {
+        return (
+          <span className="flex justify-end">
+            {record.chargeCalculationEnum === "FLAT" &&
+              record.charge.currencyId}{" "}
+            {formatNumber(record.amountPaidDerived, 2)}
+            {record.chargeCalculationEnum !== "FLAT" && `%`}
+          </span>
+        );
+      },
+    },
+    {
+      title: <span className="flex justify-end">Waived</span>,
+      dataIndex: "amountWaivedDerived;",
+      key: "amountWaivedDerived;",
+      render: (_, record) => {
+        return (
+          <span className="flex justify-end">
+            {record.chargeCalculationEnum === "FLAT" &&
+              record.charge.currencyId}{" "}
+            {formatNumber(record.amountWaivedDerived, 2)}
+            {record.chargeCalculationEnum !== "FLAT" && `%`}
+          </span>
+        );
+      },
+    },
+    {
+      title: <span className="flex justify-end">Outstanding</span>,
+      dataIndex: "amountOutstandingDerived;",
+      key: "amountOutstandingDerived;",
+      render: (_, record) => {
+        return (
+          <span className="flex justify-end">
+            {record.chargeCalculationEnum === "FLAT" &&
+              record.charge.currencyId}{" "}
+            {formatNumber(record.amountOutstandingDerived, 2)}
+            {record.chargeCalculationEnum !== "FLAT" && `%`}
+          </span>
+        );
+      },
+    },
+  ];
+  return (
+    <>
+      <PageHeader pageTitle={"Charges"} />
+      <MyDataTable<ShareAccountCharge>
+        columns={columns}
+        data={data}
+        loading={loading}
+        clickRow={false}
+        tableHeader={{ setSearchedText }}
+      />
+    </>
+  );
+}
